@@ -31,24 +31,24 @@ class SG_Post_Types {
 
 	public function register_post_types() {
 		$labels = array(
-			'name'               => _x( 'Connect Groups', 'post type general name' ),
-			'singular_name'      => _x( 'Connect Group', 'post type singular name' ),
-			'add_new'            => _x( 'Add New', 'connect_group' ),
-			'add_new_item'       => __( 'Add New Connect Group' ),
-			'edit_item'          => __( 'Edit Connect Group' ),
-			'new_item'           => __( 'New Connect Group' ),
-			'all_items'          => __( 'All Connect Groups' ),
-			'view_item'          => __( 'View Connect Group' ),
-			'search_items'       => __( 'Search Connect Groups' ),
-			'not_found'          => __( 'No connect groups found' ),
-			'not_found_in_trash' => __( 'No connect groups found in the Trash' ),
+			'name'               => _x( 'Small Groups', 'post type general name' ),
+			'singular_name'      => _x( 'Small Group', 'post type singular name' ),
+			'add_new'            => _x( 'Add New', 'small_group' ),
+			'add_new_item'       => __( 'Add New Small Group' ),
+			'edit_item'          => __( 'Edit Small Group' ),
+			'new_item'           => __( 'New Small Group' ),
+			'all_items'          => __( 'All Small Groups' ),
+			'view_item'          => __( 'View Small Group' ),
+			'search_items'       => __( 'Search Small Groups' ),
+			'not_found'          => __( 'No small groups found' ),
+			'not_found_in_trash' => __( 'No small groups found in the Trash' ),
 			'parent_item_colon'  => '',
-			'menu_name'          => 'Connect Groups',
+			'menu_name'          => 'Small Groups',
 		);
 
 		$args = array(
 			'labels'        => $labels,
-			'description'   => 'List Connect Groups',
+			'description'   => 'List Small Groups',
 			'public'        => true,
 			'menu_position' => 5,
 			'supports'      => array( 'title' ),
@@ -56,7 +56,9 @@ class SG_Post_Types {
 			'menu_icon' => 'dashicons-groups',
 		);
 
-		register_post_type( 'connect_groups', $args );
+		register_post_type( 'small_group', $args );
+
+		do_action( 'small_groups_post_types_registered' );
 	}
 
 	public function register_taxonomies() {
@@ -83,23 +85,23 @@ class SG_Post_Types {
 			'rewrite'           => array( 'slug' => 'group-area' ),
 		);
 
-		register_taxonomy( 'group_area', 'connect_groups', $args );
+		register_taxonomy( 'group_area', 'small_group', $args );
 	}
 
 	public function add_meta_boxes() {
 		add_meta_box(
-			'connect-group-information',
+			'small-group-information',
 			'Connect Group Information',
-			array( $this, 'connect_group_info_meta_box' ),
-			'connect_groups',
+			array( $this, 'small_group_info_meta_box' ),
+			'small_group',
 			'normal',
 			'high'
 		);
 	}
 
-	public function connect_group_info_meta_box( $post ) {
+	public function small_group_info_meta_box( $post ) {
 
-		wp_nonce_field( 'connect_group_info', 'connect_group_info_nonce' );
+		wp_nonce_field( 'small_group_info', 'small_group_info_nonce' );
 
 		echo '<table class="form-table">';
 
@@ -124,19 +126,15 @@ class SG_Post_Types {
 
 	public function save_meta( $post_id ) {
 
-		if ( 'connect_groups' != $_POST['post_type'] ) :
-			return $post_id;
-		endif;
-
 		// Check if our nonce is set.
-		if ( ! isset( $_POST['connect_group_info_nonce'] ) ) {
+		if ( ! isset( $_POST['small_group_info_nonce'] ) ) {
 			return $post_id;
 		}
 
-		$nonce = $_POST['connect_group_info_nonce'];
+		$nonce = $_POST['small_group_info_nonce'];
 
 		// Verify that the nonce is valid.
-		if ( ! wp_verify_nonce( $nonce, 'connect_group_info' ) ) {
+		if ( ! wp_verify_nonce( $nonce, 'small_group_info' ) ) {
 			return $post_id;
 		}
 
@@ -164,38 +162,38 @@ class SG_Post_Types {
 		$fields = array(
 			array(
 				'label' => 'Age Group',
-				'desc'  => 'Enter Connect Group age group. Ex: 15 - 22',
-				'id'    => PREFIX . 'age_group',
+				'desc'  => 'Enter Small Group age group. Ex: 15 - 22',
+				'id'    => SG_PREFIX . 'age_group',
 				'type'  => 'text',
 			),
 			array(
 				'label' => 'Life Phase',
-				'desc'  => 'Enter Connect Group life phase. Ex: Mixed, Mostly Single',
-				'id'    => PREFIX . 'life_phase',
+				'desc'  => 'Enter Small Group life phase. Ex: Mixed, Mostly Single',
+				'id'    => SG_PREFIX . 'life_phase',
 				'type'  => 'text',
 			),
 			array(
 				'label' => 'Gender',
-				'desc'  => 'Enter Connect Group gender. Ex: Mixed, Female Only, Male Only',
-				'id'    => PREFIX . 'gender',
+				'desc'  => 'Enter Small Group gender. Ex: Mixed, Female Only, Male Only',
+				'id'    => SG_PREFIX . 'gender',
 				'type'  => 'text',
 			),
 			array(
 				'label' => 'Day',
-				'desc'  => 'Enter Connect Group meeting day. Ex: Thursday / Saturday',
-				'id'    => PREFIX . 'day',
+				'desc'  => 'Enter Small Group meeting day. Ex: Thursday / Saturday',
+				'id'    => SG_PREFIX . 'day',
 				'type'  => 'text',
 			),
 			array(
 				'label' => 'Contact Email',
-				'desc'  => 'Enter Connect Group contact email. Comma separted.',
-				'id'    => PREFIX . 'email',
+				'desc'  => 'Enter Small Group contact email. Comma separted.',
+				'id'    => SG_PREFIX . 'email',
 				'type'  => 'text',
 			),
 			array(
 				'label' => 'Contact Number',
-				'desc'  => 'Enter Connect Group contact number.  Comma separted.',
-				'id'    => PREFIX . 'number',
+				'desc'  => 'Enter Small Group contact number.  Comma separted.',
+				'id'    => SG_PREFIX . 'number',
 				'type'  => 'text',
 			),
 		);

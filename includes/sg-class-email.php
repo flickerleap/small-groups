@@ -47,7 +47,9 @@ class SG_Email {
 			$message .= "Email: {$enquire_email}<br />";
 			$message .= "Contact number: {$enquire_contact_number}</p>";
 
-			$this->send( $email, $subject, $message );
+			$headers = apply_filters( 'small_group_email_headers', array() );
+
+			$this->send( $email, $subject, $message, $headers );
 
 			wp_safe_redirect( remove_query_arg( 'sg_id' ) );
 
@@ -57,9 +59,9 @@ class SG_Email {
 
 	}
 
-	public function send( $to, $subject, $message ) {
+	public function send( $to, $subject, $message, $headers ) {
 
-		wp_mail( $to, $subject, $message );
+		wp_mail( $to, $subject, $message, $headers );
 
 	}
 

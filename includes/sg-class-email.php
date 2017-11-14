@@ -41,13 +41,13 @@ class SG_Email {
 			$enquire_contact_number = $_POST['contact_number'];
 
 			$message = '<p>Hi there,</p>';
-			$message .= "<p>{$enquire_first_name} has enquired about your group ($small_group_name). Please, do not reply directy to this email.</p>";
+			$message .= "<p>{$enquire_first_name} has enquired about your group ($small_group_name).</p>";
 			$message .= "<p>First name: {$enquire_first_name}<br />";
 			$message .= "Last name: {$enquire_last_name}<br />";
 			$message .= "Email: {$enquire_email}<br />";
 			$message .= "Contact number: {$enquire_contact_number}</p>";
 
-			$headers = apply_filters( 'small_group_email_headers', array() );
+			$headers = apply_filters( 'small_group_email_headers', array( 'Reply-To: {$enquire_first_name} {$enquire_last_name} <{$enquire_email}>' ) );
 
 			$this->send( $email, $subject, $message, $headers );
 

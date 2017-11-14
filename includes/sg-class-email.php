@@ -47,7 +47,7 @@ class SG_Email {
 			$message .= "Email: {$enquire_email}<br />";
 			$message .= "Contact number: {$enquire_contact_number}</p>";
 
-			$headers = apply_filters( 'small_group_email_headers', array( 'Reply-To: {$enquire_first_name} {$enquire_last_name} <{$enquire_email}>' ) );
+			$headers = apply_filters( 'small_group_email_headers', array( "Reply-To: {$enquire_first_name} {$enquire_last_name} <{$enquire_email}>" ) );
 
 			$this->send( $email, $subject, $message, $headers );
 

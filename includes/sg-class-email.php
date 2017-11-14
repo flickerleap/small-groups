@@ -40,12 +40,13 @@ class SG_Email {
 			$enquire_email = $_POST['email'];
 			$enquire_contact_number = $_POST['contact_number'];
 
-			$message = '<p>Hi there,</p>';
-			$message .= "<p>{$enquire_first_name} has enquired about your group ($small_group_name).</p>";
+			$message = '<p>Hi!</p>';
+			$message .= "<p>{$enquire_first_name} has enquired about your group ($small_group_name). You can reply directly to this email to respond to them.</p>";
 			$message .= "<p>First name: {$enquire_first_name}<br />";
 			$message .= "Last name: {$enquire_last_name}<br />";
 			$message .= "Email: {$enquire_email}<br />";
 			$message .= "Contact number: {$enquire_contact_number}</p>";
+			$message .= "<p>Regards,<br />Rivers Connect Groups</p>";
 
 			$headers = apply_filters( 'small_group_email_headers', array( "Reply-To: {$enquire_first_name} {$enquire_last_name} <{$enquire_email}>" ) );
 

@@ -1,3 +1,8 @@
+<?php
+if (isset($_REQUEST['sg_message'])) {
+	echo sg_get_template_html('message.php');
+}
+?>
 <div class="table-responsive">
 	<table id="small-group-listing" class="">
 	<tr>

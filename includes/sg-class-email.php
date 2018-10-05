@@ -52,7 +52,7 @@ class SG_Email {
 
 			$this->send( $email, $subject, $message, $headers );
 
-			wp_safe_redirect( remove_query_arg( 'sg_id' ) );
+			wp_safe_redirect( add_query_arg( 'sg_message', urlencode('We have sent your details to the group leaders. They will be in contact with you soon.'), remove_query_arg( 'sg_id' ) ) );
 
 			die();
 
